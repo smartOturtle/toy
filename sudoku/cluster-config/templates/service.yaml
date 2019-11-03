@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "suduko.fullname" . }}
+  labels:
+{{ include "suduko.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 1234
+      protocol: TCP
+      name: suduko  
+  selector:
+    app.kubernetes.io/name: {{ include "suduko.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
